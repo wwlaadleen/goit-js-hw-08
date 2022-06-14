@@ -2,7 +2,7 @@
   "name": "parcel-project-template",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://VerseVent.github.io/goit-js-hw-08",
+  "homepage": "http://wwlaadleen.github.io/goit-js-hw-08",
   "type": "module",
   "scripts": {
     "start": "parcel src/*.html",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VerseVent/goit-js-hw-08.git"
+    "url": "git+https://github.com/wwlaadleen/goit-js-hw-08.git"
   },
   "keywords": [],
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
