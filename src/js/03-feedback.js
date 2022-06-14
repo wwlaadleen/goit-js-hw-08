@@ -34,11 +34,11 @@ function onFormInput(e) {
   localStorage.setItem('feedback-form-state', JSON.stringify(formObject));
 }
 
-function addLocalValuesToFormInputs() {
+function addLocalValuesToInputs() {
   if (localFormObject) {
     refs.emailInputEl.value = localFormObject.email;
     refs.textAreaEl.value = localFormObject.message;
   }
 }
 
-addLocalValuesToFormInputs();
+addLocalValuesToInputs();
