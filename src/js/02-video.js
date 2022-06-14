@@ -1,19 +1,43 @@
 import Player from '@vimeo/player';
+
+// lodash.throttle
 import throttle from 'lodash.throttle';
-const iframe = document.querySelector('iframe');
+
+const iframe = document.querySelector('#vimeo-player');
 const player = new Player(iframe);
-const videoplayerTime = 'videoplayer-current-time';
-//Лисенер события изменения времени видео
 
-player.on('timeupdate', throttle(onTimeUpdate, 1000));
+const LOCALSTORAGE_KEY = 'videoplayer-current-time';
 
-//Ставим видео на тайминг локальной переменной
+const onPlay = function (data) {
+  localStorage.setItem(LOCALSTORAGE_KEY, data.seconds);
+  // Виводимо таймінг в консоль
+  console.log(localStorage.getItem(LOCALSTORAGE_KEY));
+};
 
-player.setCurrentTime(localStorage.getItem(videoplayerTime));
+// player
+//   .setCurrentTime()
+//   .then(function (seconds) {
+//     // seconds = the actual time that the player seeked to
+//   })
+//   .catch(function (error) {
+//     switch (error.name) {
+//       case 'RangeError':
+//         // the time was less than 0 or greater than the video’s duration
+//         break;
 
-// Функция события тика времени видео, которая создаёт/переписывает
-// переменную локального хранилища
+//       default:
+//         // some other error occurred
+//         break;
+//     }
+//   });
 
-function onTimeUpdate(e) {
-  localStorage.setItem(videoplayerTime, String(e.seconds));
+setCurrentTime();
+
+function setCurrentTime() {
+  if (!localStorage.getItem(LOCALSTORAGE_KEY)) {
+    return;
+  }
+  player.setCurrentTime(localStorage.getItem(LOCALSTORAGE_KEY));
 }
+
+player.on('timeupdate', throttle(onPlay, 1000));

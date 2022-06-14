@@ -1,46 +1,32 @@
+// Описаний в документації
 import SimpleLightbox from 'simplelightbox';
-
+// Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-import { galleryItems } from './gallery-items.js';
+// Add imports above this line
+import { galleryItems } from './gallery-items';
+// Change code below this line
 
-const refs = {
-  galleryEl: document.querySelector('.gallery'),
-};
+console.log(galleryItems);
 
-refs.galleryEl.insertAdjacentHTML(
-  'beforeend',
-  createGalleryItems(galleryItems)
-);
+const divRef = document.querySelector('.gallery');
 
-const lazyImages = document.querySelectorAll('img[loading]');
+function createGallaryMarkup(items) {
+  return items
+    .map(
+      item =>
+        `<a class="gallery__item" href="${item.original}">
+        <img class="gallery__image" src="${item.preview}" alt="${item.description}" /></a>`
+    )
+    .join('');
+}
 
-lazyImages.forEach(e => {
-  e.addEventListener('load', onImageLoading, { once: true });
-});
+const addGallaryMarkup = createGallaryMarkup(galleryItems);
 
-//Навешивание модалки лайтбокса на все изображения в галереи(также обработка кликов)
+divRef.insertAdjacentHTML('beforeend', addGallaryMarkup);
 
 const lightbox = new SimpleLightbox('.gallery a', {
-  captionType: 'attr',
   captionsData: 'alt',
+  captionPosition: 'bottom',
   captionDelay: 250,
 });
-
-function onImageLoading(event) {
-  event.target.classList.add('appear');
-}
-
-//Создание всех элементов галереи
-
-function createGalleryItems(galleryItems) {
-  return galleryItems
-    .map(({ preview, original, description }) => {
-      return `
-        <a class="gallery__item" href="${original}">
-            <img loading = "lazy" class="gallery__image" src="${preview}" alt="${description}"/>
-        </a>
-        `;
-    })
-    .join(' ');
-}
